@@ -1,22 +1,63 @@
 const sections = [...document.querySelectorAll('main > section')];
-const navLinks = [...document.querySelectorAll('.hotspot-nav a')];
 const currentLabel = document.getElementById('currentLabel');
 const topButton = document.querySelector('.back-to-top');
-const sectionNames = {
-  home: 'HOME',
-  about: 'ABOUT',
-  film: 'FILM',
-  animation: 'ANIMATION',
-  commercial: 'COMMERCIAL',
-  works: 'WORKS',
-  contact: 'CONTACT'
-};
+const menuItems = [
+  ['home', 'HOME'],
+  ['about', 'ABOUT'],
+  ['film', 'FILM'],
+  ['animation', 'ANIMATION'],
+  ['commercial', 'COMMERCIAL'],
+  ['works', 'WORKS'],
+  ['contact', 'CONTACT']
+];
+const sectionNames = Object.fromEntries(menuItems);
+const mediaCropRatio = 0.065;
+
+function buildInFrameMenus() {
+  document.querySelectorAll('.frame').forEach((frame) => {
+    const image = frame.querySelector('img');
+    if (!image) return;
+
+    const mediaCrop = document.createElement('div');
+    mediaCrop.className = 'media-crop';
+
+    frame.insertBefore(mediaCrop, image);
+    mediaCrop.appendChild(image);
+
+    const menu = document.createElement('nav');
+    menu.className = 'inframe-menu';
+    menu.setAttribute('aria-label', 'In-frame navigation');
+
+    menuItems.forEach(([id, label]) => {
+      const link = document.createElement('a');
+      link.href = `#${id}`;
+      link.dataset.sectionLink = id;
+      link.textContent = label;
+      menu.appendChild(link);
+    });
+
+    frame.appendChild(menu);
+
+    const applyRatio = () => {
+      if (!image.naturalWidth || !image.naturalHeight) return;
+      mediaCrop.style.aspectRatio = `${image.naturalWidth} / ${image.naturalHeight * (1 - mediaCropRatio)}`;
+      frame.style.setProperty('--media-crop-ratio', `${mediaCropRatio}`);
+    };
+
+    if (image.complete) {
+      applyRatio();
+    } else {
+      image.addEventListener('load', applyRatio, { once: true });
+    }
+  });
+}
 
 function installVideos() {
   document.querySelectorAll('.video-frame').forEach((frame) => {
     const src = frame.dataset.video;
     const poster = frame.dataset.poster;
-    if (!src) return;
+    const mediaCrop = frame.querySelector('.media-crop');
+    if (!src || !mediaCrop) return;
 
     const video = document.createElement('video');
     video.muted = true;
@@ -37,8 +78,10 @@ function installVideos() {
     }, { once: true });
 
     video.addEventListener('ended', () => {
-      // Keep the last frame visible.
       video.pause();
+      if (Number.isFinite(video.duration)) {
+        video.currentTime = Math.max(video.duration - 0.001, 0);
+      }
     });
 
     video.addEventListener('error', () => {
@@ -46,7 +89,7 @@ function installVideos() {
       frame.classList.remove('video-ready');
     }, { once: true });
 
-    frame.appendChild(video);
+    mediaCrop.appendChild(video);
     frame.dataset.played = 'false';
   });
 }
@@ -64,7 +107,7 @@ function updateUI() {
   const current = activeSectionId();
   currentLabel.textContent = sectionNames[current] || current.toUpperCase();
 
-  navLinks.forEach((link) => {
+  document.querySelectorAll('[data-section-link]').forEach((link) => {
     const target = link.getAttribute('href')?.slice(1);
     link.setAttribute('aria-current', target === current ? 'page' : 'false');
   });
@@ -92,7 +135,20 @@ function tryPlayVisibleVideos() {
   });
 }
 
+function installSectionLinks() {
+  document.querySelectorAll('[data-section-link]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (!target) return;
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+}
+
+buildInFrameMenus();
 installVideos();
+installSectionLinks();
 updateUI();
 tryPlayVisibleVideos();
 
@@ -102,15 +158,6 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 window.addEventListener('resize', updateUI);
-
-navLinks.forEach((link) => {
-  link.addEventListener('click', (event) => {
-    event.preventDefault();
-    const target = document.querySelector(link.getAttribute('href'));
-    if (!target) return;
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-});
 
 topButton.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
