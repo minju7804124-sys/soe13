@@ -11,40 +11,15 @@ const menuItems = [
   ['contact', 'CONTACT']
 ];
 const sectionNames = Object.fromEntries(menuItems);
-const mediaCropRatio = 0.082;
+const mediaCropRatio = 0.115;
 
-function buildInFrameMenus() {
+function buildMediaCrops() {
   document.querySelectorAll('.frame').forEach((frame) => {
     const image = frame.querySelector('img');
-    const sectionId = frame.closest('section')?.id || 'home';
-    const frameTitle = sectionId === 'home' ? 'SoE!' : (sectionNames[sectionId] || sectionId.toUpperCase());
     if (!image) return;
-
-    const frameBar = document.createElement('div');
-    frameBar.className = 'frame-topbar';
-
-    const title = document.createElement('div');
-    title.className = 'frame-title';
-    title.textContent = frameTitle;
-
-    const menu = document.createElement('nav');
-    menu.className = 'inframe-menu';
-    menu.setAttribute('aria-label', 'In-frame navigation');
-
-    menuItems.forEach(([id, label]) => {
-      const link = document.createElement('a');
-      link.href = `#${id}`;
-      link.dataset.sectionLink = id;
-      link.textContent = label;
-      menu.appendChild(link);
-    });
-
-    frameBar.append(title, menu);
 
     const mediaCrop = document.createElement('div');
     mediaCrop.className = 'media-crop';
-
-    frame.prepend(frameBar);
     frame.appendChild(mediaCrop);
     mediaCrop.appendChild(image);
 
@@ -156,7 +131,7 @@ function installSectionLinks() {
   });
 }
 
-buildInFrameMenus();
+buildMediaCrops();
 installVideos();
 installSectionLinks();
 updateUI();

@@ -4,92 +4,67 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SoE! Portfolio</title>
-  <meta name="description" content="SoE! portfolio" />
+  <meta name="description" content="SoE! portfolio website recreation based on uploaded portfolio pages and videos." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="chrome">
-    <div class="current-label" id="currentLabel">HOME</div>
-    <nav class="hotspot-nav" aria-label="Section navigation">
-      <a href="#home" data-section-link="home">HOME</a>
-      <a href="#about" data-section-link="about">ABOUT</a>
-      <a href="#film" data-section-link="film">FILM</a>
-      <a href="#animation" data-section-link="animation">ANIMATION</a>
-      <a href="#commercial" data-section-link="commercial">COMMERCIAL</a>
-      <a href="#works" data-section-link="works">WORKS</a>
-      <a href="#contact" data-section-link="contact">CONTACT</a>
-    </nav>
+    <div class="chrome-inner">
+      <div class="current-label" id="currentLabel">SoE!</div>
+      <nav class="top-nav" aria-label="Section navigation">
+        <a href="#home" data-section-link="home">HOME</a>
+        <a href="#about" data-section-link="about">ABOUT</a>
+        <a href="#film" data-section-link="film">FILM</a>
+        <a href="#animation" data-section-link="animation">ANIMATION</a>
+        <a href="#commercial" data-section-link="commercial">COMMERCIAL</a>
+        <a href="#works" data-section-link="works">WORKS</a>
+        <a href="#contact" data-section-link="contact">CONTACT</a>
+      </nav>
+    </div>
   </div>
 
   <main>
     <section id="home" class="section">
-      <div class="frame video-frame" data-video="assets/page_01.mp4" data-poster="assets/page_01.png">
-        <img src="assets/page_01.png" alt="SoE! home page" />
-      </div>
+      <div class="frame video-frame" data-video="assets/page_01.mp4" data-poster="assets/page_01.png"><img src="assets/page_01.png" alt="SoE! home portfolio page" /></div>
     </section>
 
     <section id="about" class="section">
-      <div class="frame video-frame" data-video="assets/page_02.mp4" data-poster="assets/page_02.png">
-        <img src="assets/page_02.png" alt="About page" />
-      </div>
+      <div class="frame video-frame" data-video="assets/page_02.mp4" data-poster="assets/page_02.png"><img src="assets/page_02.png" alt="About page" /></div>
     </section>
 
     <section id="film" class="section">
-      <div class="frame video-frame" data-video="assets/page_03.mp4" data-poster="assets/page_03.png">
-        <img src="assets/page_03.png" alt="Film page" />
-      </div>
+      <div class="frame video-frame" data-video="assets/page_03.mp4" data-poster="assets/page_03.png"><img src="assets/page_03.png" alt="Film page" /></div>
     </section>
 
     <section id="animation" class="section stack">
-      <div class="frame video-frame" data-video="assets/page_04.mp4" data-poster="assets/page_04.png">
-        <img src="assets/page_04.png" alt="Animation page 1" />
-      </div>
-      <div class="frame video-frame" data-video="assets/page_05.mp4" data-poster="assets/page_05.png">
-        <img src="assets/page_05.png" alt="Animation page 2" />
-      </div>
+      <div class="frame video-frame" data-video="assets/page_04.mp4" data-poster="assets/page_04.png"><img src="assets/page_04.png" alt="Animation page INSOMNIA" /></div>
+      <div class="frame video-frame" data-video="assets/page_05.mp4" data-poster="assets/page_05.png"><img src="assets/page_05.png" alt="Animation page THE LAST STRING" /></div>
     </section>
 
     <section id="commercial" class="section stack">
-      <div class="frame video-frame" data-video="assets/page_06.mp4" data-poster="assets/page_06.png">
-        <img src="assets/page_06.png" alt="Commercial page 1" />
-      </div>
-      <div class="frame video-frame" data-video="assets/page_07.mp4" data-poster="assets/page_07.png">
-        <img src="assets/page_07.png" alt="Commercial page 2" />
-      </div>
-      <div class="frame video-frame" data-video="assets/page_08.mp4" data-poster="assets/page_08.png">
-        <img src="assets/page_08.png" alt="Commercial page 3" />
-      </div>
+      <div class="frame video-frame" data-video="assets/page_06.mp4" data-poster="assets/page_06.png"><img src="assets/page_06.png" alt="Commercial page High Noon Coke" /></div>
+      <div class="frame video-frame" data-video="assets/page_07.mp4" data-poster="assets/page_07.png"><img src="assets/page_07.png" alt="Commercial page Valune" /></div>
+      <div class="frame video-frame" data-video="assets/page_08.mp4" data-poster="assets/page_08.png"><img src="assets/page_08.png" alt="Commercial page Etoile" /></div>
     </section>
 
     <section id="works" class="section stack">
-      <div class="frame video-frame" data-video="assets/page_09.mp4" data-poster="assets/page_09.png">
-        <img src="assets/page_09.png" alt="Works page 1" />
-      </div>
-      <div class="frame video-frame" data-video="assets/page_10.mp4" data-poster="assets/page_10.png">
-        <img src="assets/page_10.png" alt="Works page 2" />
-      </div>
-      <div class="frame video-frame" data-video="assets/page_11.mp4" data-poster="assets/page_11.png">
-        <img src="assets/page_11.png" alt="Works page 3" />
-      </div>
-      <div class="frame video-frame" data-video="assets/page_12.mp4" data-poster="assets/page_12.png">
-        <img src="assets/page_12.png" alt="Works page 4" />
-      </div>
+      <div class="frame video-frame" data-video="assets/page_09.mp4" data-poster="assets/page_09.png"><img src="assets/page_09.png" alt="Works page Forbidden Forest" /></div>
+      <div class="frame video-frame" data-video="assets/page_10.mp4" data-poster="assets/page_10.png"><img src="assets/page_10.png" alt="Works collage page pink fashion" /></div>
+      <div class="frame video-frame" data-video="assets/page_11.mp4" data-poster="assets/page_11.png"><img src="assets/page_11.png" alt="Works collage page surreal landscape" /></div>
+      <div class="frame video-frame" data-video="assets/page_12.mp4" data-poster="assets/page_12.png"><img src="assets/page_12.png" alt="Works page SoE monitor collage" /></div>
     </section>
 
     <section id="contact" class="section stack">
-      <div class="frame video-frame" data-video="assets/page_13.mp4" data-poster="assets/page_13.png">
-        <img src="assets/page_13.png" alt="Contact page 1" />
-      </div>
-      <div class="frame video-frame" data-video="assets/page_14.mp4" data-poster="assets/page_14.png">
-        <img src="assets/page_14.png" alt="Contact page 2" />
-      </div>
+      <div class="frame video-frame" data-video="assets/page_13.mp4" data-poster="assets/page_13.png"><img src="assets/page_13.png" alt="Direction statement page" /></div>
+      <div class="frame video-frame" data-video="assets/page_14.mp4" data-poster="assets/page_14.png"><img src="assets/page_14.png" alt="Contact page" /></div>
     </section>
   </main>
 
-  <button class="back-to-top" type="button" aria-label="Back to top">↑</button>
+  <button class="back-to-top" aria-label="Back to top">↑</button>
+
   <script src="script.js"></script>
 </body>
 </html>
