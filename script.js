@@ -115,7 +115,7 @@ function activeSectionId() {
 
 function updateUI() {
   const current = activeSectionId();
-  currentLabel.textContent = sectionNames[current] || current.toUpperCase();
+  currentLabel.textContent = current === 'home' ? 'SoE!' : (sectionNames[current] || current.toUpperCase());
 
   document.querySelectorAll('[data-section-link]').forEach((link) => {
     const target = link.getAttribute('href')?.slice(1);

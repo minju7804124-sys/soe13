@@ -151,11 +151,17 @@ main {
 .frame.video-ready img { opacity: 0; }
 
 .inframe-menu {
+  position: absolute;
+  top: clamp(18px, 2vw, 30px);
+  left: 50%;
+  width: min(calc(100% - 92px), 1080px);
+  transform: translateX(-50%);
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  flex-wrap: wrap;
   gap: clamp(12px, 1.45vw, 26px);
+  padding-right: clamp(18px, 2.3vw, 38px);
+  z-index: 3;
 }
 
 .inframe-menu a {
@@ -166,6 +172,7 @@ main {
   letter-spacing: 0.14em;
   font-weight: 600;
   text-transform: uppercase;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.45);
   transition: color 180ms ease, opacity 180ms ease;
 }
 
@@ -222,9 +229,12 @@ main {
     font-size: clamp(28px, 7vw, 42px);
   }
   .inframe-menu {
-    width: 100%;
-    justify-content: flex-start;
+    top: 14px;
+    width: calc(100% - 30px);
+    justify-content: center;
     gap: 10px;
+    padding-right: 0;
+    flex-wrap: wrap;
   }
   .inframe-menu a {
     font-size: 10px;
