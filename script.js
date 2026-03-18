@@ -11,18 +11,21 @@ const menuItems = [
   ['contact', 'CONTACT']
 ];
 const sectionNames = Object.fromEntries(menuItems);
-const mediaCropRatio = 0.065;
+const mediaCropRatio = 0.082;
 
 function buildInFrameMenus() {
   document.querySelectorAll('.frame').forEach((frame) => {
     const image = frame.querySelector('img');
+    const sectionId = frame.closest('section')?.id || 'home';
+    const frameTitle = sectionId === 'home' ? 'SoE!' : (sectionNames[sectionId] || sectionId.toUpperCase());
     if (!image) return;
 
-    const mediaCrop = document.createElement('div');
-    mediaCrop.className = 'media-crop';
+    const frameBar = document.createElement('div');
+    frameBar.className = 'frame-topbar';
 
-    frame.insertBefore(mediaCrop, image);
-    mediaCrop.appendChild(image);
+    const title = document.createElement('div');
+    title.className = 'frame-title';
+    title.textContent = frameTitle;
 
     const menu = document.createElement('nav');
     menu.className = 'inframe-menu';
@@ -36,7 +39,14 @@ function buildInFrameMenus() {
       menu.appendChild(link);
     });
 
-    frame.appendChild(menu);
+    frameBar.append(title, menu);
+
+    const mediaCrop = document.createElement('div');
+    mediaCrop.className = 'media-crop';
+
+    frame.prepend(frameBar);
+    frame.appendChild(mediaCrop);
+    mediaCrop.appendChild(image);
 
     const applyRatio = () => {
       if (!image.naturalWidth || !image.naturalHeight) return;
@@ -105,7 +115,7 @@ function activeSectionId() {
 
 function updateUI() {
   const current = activeSectionId();
-  currentLabel.textContent = sectionNames[current] || current.toUpperCase();
+  currentLabel.textContent = current === 'home' ? 'SoE!' : (sectionNames[current] || current.toUpperCase());
 
   document.querySelectorAll('[data-section-link]').forEach((link) => {
     const target = link.getAttribute('href')?.slice(1);
