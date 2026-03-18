@@ -1,6 +1,7 @@
 const sections = [...document.querySelectorAll('main > section')];
 const currentLabel = document.getElementById('currentLabel');
 const topButton = document.querySelector('.back-to-top');
+
 const menuItems = [
   ['home', 'HOME'],
   ['about', 'ABOUT'],
@@ -10,8 +11,8 @@ const menuItems = [
   ['works', 'WORKS'],
   ['contact', 'CONTACT']
 ];
+
 const sectionNames = Object.fromEntries(menuItems);
-const mediaCropRatio = 0.115;
 
 function buildMediaCrops() {
   document.querySelectorAll('.frame').forEach((frame) => {
@@ -22,56 +23,39 @@ function buildMediaCrops() {
     mediaCrop.className = 'media-crop';
     frame.appendChild(mediaCrop);
     mediaCrop.appendChild(image);
-
-    const applyRatio = () => {
-      if (!image.naturalWidth || !image.naturalHeight) return;
-      mediaCrop.style.aspectRatio = `${image.naturalWidth} / ${image.naturalHeight * (1 - mediaCropRatio)}`;
-      frame.style.setProperty('--media-crop-ratio', `${mediaCropRatio}`);
-    };
-
-    if (image.complete) {
-      applyRatio();
-    } else {
-      image.addEventListener('load', applyRatio, { once: true });
-    }
   });
 }
 
 function installVideos() {
   document.querySelectorAll('.video-frame').forEach((frame) => {
     const src = frame.dataset.video;
-    const poster = frame.dataset.poster;
     const mediaCrop = frame.querySelector('.media-crop');
     if (!src || !mediaCrop) return;
 
     const video = document.createElement('video');
     video.muted = true;
+    video.autoplay = false;
     video.playsInline = true;
-    video.preload = 'metadata';
-    video.poster = poster || '';
+    video.preload = 'auto';
     video.setAttribute('muted', '');
     video.setAttribute('playsinline', '');
-    video.setAttribute('preload', 'metadata');
+    video.setAttribute('preload', 'auto');
 
     const source = document.createElement('source');
     source.src = src;
     source.type = 'video/mp4';
     video.appendChild(source);
 
-    video.addEventListener('canplay', () => {
-      frame.classList.add('video-ready');
-    }, { once: true });
-
     video.addEventListener('ended', () => {
       video.pause();
-      if (Number.isFinite(video.duration)) {
+      if (Number.isFinite(video.duration) && video.duration > 0) {
         video.currentTime = Math.max(video.duration - 0.001, 0);
       }
     });
 
     video.addEventListener('error', () => {
+      frame.classList.add('video-fallback');
       video.remove();
-      frame.classList.remove('video-ready');
     }, { once: true });
 
     mediaCrop.appendChild(video);
@@ -82,6 +66,7 @@ function installVideos() {
 function activeSectionId() {
   const midpoint = window.scrollY + Math.min(window.innerHeight * 0.28, 180);
   let current = sections[0]?.id || 'home';
+
   for (const section of sections) {
     if (midpoint >= section.offsetTop) current = section.id;
   }
@@ -114,6 +99,7 @@ function tryPlayVisibleVideos() {
 
     if (playPromise && typeof playPromise.catch === 'function') {
       playPromise.catch(() => {
+        frame.classList.add('video-fallback');
         frame.dataset.played = 'false';
       });
     }
